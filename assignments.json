@@ -1,0 +1,34 @@
+{
+  "fm3": {
+    "activity_id": 201,
+    "course": "foundations"
+  },
+  "fm5": {
+    "activity_id": 202,
+    "course": "foundations"
+  },
+  "fm8": {
+    "activity_id": 203,
+    "course": "foundations"
+  },
+  "m2a": {
+    "activity_id": 166,
+    "course": "ml_engineer"
+  },
+  "m2b": {
+    "activity_id": 167,
+    "course": "ml_engineer"
+  },
+  "m2c": {
+    "activity_id": 168,
+    "course": "ml_engineer"
+  },
+  "m3b": {
+    "activity_id": 169,
+    "course": "ml_engineer"
+  },
+  "m4": {
+    "activity_id": 170,
+    "course": "ml_engineer"
+  }
+}
