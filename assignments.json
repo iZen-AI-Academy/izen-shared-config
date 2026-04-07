@@ -1,15 +1,27 @@
 {
   "fm3": {
+    "activity_id": 202,
+    "course": "python"
+  },
+    "fm4": {
     "activity_id": 201,
-    "course": "foundations"
+    "course": "numpy"
   },
   "fm5": {
-    "activity_id": 202,
-    "course": "foundations"
+    "activity_id": 203,
+    "course": "pandas"
+  },
+  "fm6": {
+    "activity_id": 203,
+    "course": "matplotlib"
+  },
+  "fm7": {
+    "activity_id": 203,
+    "course": "scikit"
   },
   "fm8": {
     "activity_id": 203,
-    "course": "foundations"
+    "course": "data_transformation"
   },
   "m2a": {
     "activity_id": 166,
