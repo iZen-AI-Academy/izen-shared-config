@@ -25,20 +25,38 @@ from provision_repos import ORG, set_private_repo_secrets
 # Prefixes of assignments known to be private (see ASSIGNMENT_CONFIG in
 # provision_repos.py). fm3-python-programming-* is deliberately excluded --
 # it's public, so it was never affected. Includes both pandas prefixes still
-# in use (fm4-pandas-* and the older fm5-pandas-*).
+# in use (fm4-pandas-* and the older fm5-pandas-*). M2A is excluded -- its
+# template is empty/unusable, so no valid student repos exist for it yet.
 PRIVATE_REPO_PREFIXES = (
     "fm4-numpy-",
     "fm4-pandas-",
     "fm5-pandas-",
     "fm8-feature-engineering-",
+    "mle-m2b-regression-gda-",
+    "mle-m2c-regression-car-price-",
+    "mle-m3a-classification-metrics-",
+    "mle-m3b-classification-logistic-regression-",
+    "mle-m3c-classification-svm-",
+    "mle-m3d-classification-dct-",
+    "mle-m4-clustering-",
+    "mle-m5a-pca-",
+    "mle-m5b-validation-",
 )
 
 
 def find_private_assignment_repos(gh: Github) -> list[str]:
+    """Find private student repos matching a known assignment prefix.
+
+    Template repos are excluded even though some share the same prefix as
+    their student repos (e.g. mle-m2b-regression-gda-template) -- they're
+    never a student's actual submission and don't need grading secrets.
+    """
     org = gh.get_organization(ORG)
     names = []
     for repo in org.get_repos():
-        if repo.private and repo.name.startswith(PRIVATE_REPO_PREFIXES):
+        if (repo.private and not repo.is_template
+                and not repo.name.endswith(("-template", "_template"))
+                and repo.name.startswith(PRIVATE_REPO_PREFIXES)):
             names.append(repo.name)
     return names
 

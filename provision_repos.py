@@ -42,6 +42,18 @@ ASSIGNMENT_CONFIG = {
     "FM3": {"template": "fm3_numpy_template", "prefix": "fm4-numpy", "private": True},
     "FM4": {"template": "fm4_pandas_template", "prefix": "fm4-pandas", "private": True},
     "FM7": {"template": "fm7_feature_engineering_template", "prefix": "fm8-feature-engineering", "private": True},
+    # Machine Learning Engineer course (course_id 19). M2A is deliberately
+    # excluded: its template repo (mle-m2a-regression-metrics-template) is
+    # empty and not marked as a usable template -- pending a fix.
+    "M2B": {"template": "mle-m2b-regression-gda-template", "prefix": "mle-m2b-regression-gda", "private": True},
+    "M2C": {"template": "mle-m2-regression-car-price-template", "prefix": "mle-m2c-regression-car-price", "private": True},
+    "M3A": {"template": "mle-m3a-classification-metrics-template", "prefix": "mle-m3a-classification-metrics", "private": True},
+    "M3B": {"template": "mle-m3b-classification-logistic-regression-template", "prefix": "mle-m3b-classification-logistic-regression", "private": True},
+    "M3C": {"template": "mle-m3c-classification-svm-template", "prefix": "mle-m3c-classification-svm", "private": True},
+    "M3D": {"template": "mle-m3d-classification-dct-template", "prefix": "mle-m3d-classification-dct", "private": True},
+    "M4": {"template": "mle-m4-clustering-template", "prefix": "mle-m4-clustering", "private": True},
+    "M5A": {"template": "mle-m5a-pca-template", "prefix": "mle-m5a-pca", "private": True},
+    "M5B": {"template": "mle-m5b-validation-template", "prefix": "mle-m5b-validation", "private": True},
 }
 
 COLLABORATOR_PERMISSION = "push"
