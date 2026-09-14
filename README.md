@@ -62,3 +62,24 @@ PROVISION_PAT=<token> MOODLE_URL=<value> MOODLE_TOKEN=<value> python provision_r
 
 Drop `--dry-run` to actually create repos, add collaborators, and set repo
 secrets on private repos.
+
+## Self-service repo requests (students)
+
+Give students this link:
+
+**https://github.com/iZen-AI-Academy/izen-shared-config/issues/new?template=request-repo.yml**
+
+They pick their assignment from a dropdown and submit. Because they're
+already logged into GitHub, their username is captured automatically from
+who actually opened the issue — not a text field they type into, so there's
+no way to request a repo under someone else's name. A workflow
+(`provision-from-issue.yml`) picks up the request, runs the same
+provisioning logic as `provision_repos.py` for that one student, comments
+the result on the issue (the new repo's link, or a clear error), and closes
+it either way.
+
+Only GitHub usernames already present in `github_moodle_map.csv` can
+request a repo this way — since this repo is public, anyone with a GitHub
+account can technically open the issue, and that roster check is the guard
+against a stranger getting a repo (and a copy of the Moodle secrets) created
+for them.

@@ -1,0 +1,32 @@
+name: Request my assignment repo
+description: Get a GitHub repo created for your assignment (replaces GitHub Classroom)
+title: "Repo request"
+labels: ["repo-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submitting this creates a repo for **you specifically** — whoever is
+        logged into GitHub right now. Make sure you're logged into your own
+        account before submitting.
+  - type: dropdown
+    id: assignment
+    attributes:
+      label: Assignment
+      description: Which assignment do you need a repo for?
+      options:
+        - "FM2 - Python Programming"
+        - "FM3 - NumPy"
+        - "FM4 - Pandas"
+        - "FM7 - Feature Engineering"
+        - "M2B - Regression GDA"
+        - "M2C - Regression Car Price"
+        - "M3A - Classification Metrics"
+        - "M3B - Classification Logistic Regression"
+        - "M3C - Classification SVM"
+        - "M3D - Classification DCT"
+        - "M4 - Clustering"
+        - "M5A - PCA"
+        - "M5B - Validation"
+    validations:
+      required: true
