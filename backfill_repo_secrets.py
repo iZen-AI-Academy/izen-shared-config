@@ -23,10 +23,14 @@ from github import Auth, Github
 from provision_repos import ORG, set_private_repo_secrets
 
 # Prefixes of assignments known to be private (see ASSIGNMENT_CONFIG in
-# provision_repos.py). fm3-python-programming-* is deliberately excluded --
-# it's public, so it was never affected. Includes both pandas prefixes still
-# in use (fm4-pandas-* and the older fm5-pandas-*).
+# provision_repos.py). Includes both pandas prefixes still in use
+# (fm4-pandas-* and the older fm5-pandas-*). fm3-python-programming-* (FM2)
+# was public until students were found to be able to browse each other's
+# public repos; convert_fm2_to_private.py handles the one-time visibility
+# flip for existing repos, this list just needs to include the prefix so
+# future runs of this script also cover them.
 PRIVATE_REPO_PREFIXES = (
+    "fm3-python-programming-",
     "fm4-numpy-",
     "fm4-pandas-",
     "fm5-pandas-",

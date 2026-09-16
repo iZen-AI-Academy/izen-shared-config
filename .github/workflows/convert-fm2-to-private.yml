@@ -1,0 +1,33 @@
+name: Convert FM2 repos to private
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (no repos changed)"
+        type: boolean
+        default: true
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install PyGithub requests pynacl
+
+      - name: Run conversion
+        env:
+          PROVISION_PAT: ${{ secrets.PROVISION_PAT }}
+          MOODLE_URL: ${{ secrets.MOODLE_URL }}
+          MOODLE_TOKEN: ${{ secrets.MOODLE_TOKEN }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python convert_fm2_to_private.py --dry-run
+          else
+            python convert_fm2_to_private.py
+          fi
