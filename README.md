@@ -41,8 +41,7 @@ scoped to "All repositories" (like `MOODLE_URL` and `MOODLE_TOKEN`) is only
 ever passed to **public** repos — private repos never receive it, no matter
 how they were created. This isn't new or caused by the Classroom migration:
 it's been silently breaking Moodle sync for every private assignment (NumPy,
-Pandas, Feature Engineering) since at least mid-2026. Only the public FM2
-(Python) repos have ever synced correctly.
+Pandas, Feature Engineering) since at least mid-2026.
 
 Since `izen-shared-config` is itself public, its own workflow *can* read
 `secrets.MOODLE_URL` / `secrets.MOODLE_TOKEN` fine. `provision_repos.py` uses
@@ -53,6 +52,12 @@ already wired up in `provision-repos.yml`, sourced from the same org secrets.
 
 Existing private student repos created before this fix has the same problem
 and need a one-time backfill — see `backfill_repo_secrets.py`.
+
+FM2 (Python) is private too, for a different reason: it used to be public
+specifically to get the free org-secret access described above, but that
+meant students could browse each other's public FM2 repos on GitHub.
+`convert_fm2_to_private.py` is the one-time migration that flips existing
+FM2 repos to private and backfills their repo-level secrets the same way.
 
 To run manually instead:
 

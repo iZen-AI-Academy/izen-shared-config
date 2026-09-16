@@ -38,7 +38,7 @@ ORG = "iZen-AI-Academy"
 # Repo prefixes intentionally match the pre-existing student repos so that
 # downstream grading/Moodle-sync automation keeps matching by name.
 ASSIGNMENT_CONFIG = {
-    "FM2": {"template": "fm2_python_template", "prefix": "fm3-python-programming", "private": False},
+    "FM2": {"template": "fm2_python_template", "prefix": "fm3-python-programming", "private": True},
     "FM3": {"template": "fm3_numpy_template", "prefix": "fm4-numpy", "private": True},
     "FM4": {"template": "fm4_pandas_template", "prefix": "fm4-pandas", "private": True},
     "FM7": {"template": "fm7_feature_engineering_template", "prefix": "fm8-feature-engineering", "private": True},
@@ -83,6 +83,16 @@ def generate_from_template(token: str, template_name: str, new_name: str, privat
     )
     resp.raise_for_status()
     return resp.json()
+
+
+def set_repo_private(token: str, repo_name: str) -> None:
+    resp = requests.patch(
+        f"https://api.github.com/repos/{ORG}/{repo_name}",
+        headers=_api_headers(token),
+        json={"private": True},
+        timeout=30,
+    )
+    resp.raise_for_status()
 
 
 def get_repo_public_key(token: str, repo_name: str) -> tuple[str, str]:
