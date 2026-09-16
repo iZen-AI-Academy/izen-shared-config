@@ -21,8 +21,17 @@ jobs:
           script: |
             const body = context.payload.issue.body || "";
             const match = body.match(/###\s*Assignment\s*\n+\s*([A-Za-z0-9]+)/);
-            core.setOutput("code", match ? match[1].toUpperCase() : "");
-            core.setOutput("username", context.payload.issue.user.login);
+            const code = match ? match[1].toUpperCase() : "";
+            const username = context.payload.issue.user.login;
+            core.setOutput("code", code);
+            core.setOutput("username", username);
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              title: `Repo request: ${username} (${code || "unknown code"})`,
+            });
 
       - uses: actions/setup-python@v5
         with:
