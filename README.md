@@ -8,6 +8,7 @@ Files:
 - courses.json: course IDs in Moodle
 - assignments.json: assignment → Moodle activity IDs
 - grading_config.json: optional grading settings
+- assignment_config.json: assignment → template repo, resulting repo prefix, and public/private (see below)
 - provision_repos.py / roster.csv: student repo provisioning (see below)
 
 ## Repo provisioning (replaces GitHub Classroom, retired 2026-08-28)
@@ -25,10 +26,13 @@ github_username,assignment_code
 someusername,FM2
 ```
 
-Assignment codes: `FM2` (Python), `FM3` (NumPy), `FM4` (Pandas), `FM7`
-(Feature Engineering). Pushing a change to `roster.csv` on `main` triggers the
-`Provision student repos` workflow automatically; it skips any repo that
-already exists, so it's safe to leave old rows in place.
+Assignment codes come from `assignment_config.json` — currently `FM2`
+(Python), `FM3` (NumPy), `FM4` (Pandas), `FM7` (Feature Engineering). Each
+entry there is `{"template": ..., "prefix": ..., "private": ...}`; adding a
+new assignment just means adding a new entry to that file, no code changes
+needed. Pushing a change to `roster.csv` on `main` triggers the `Provision
+student repos` workflow automatically; it skips any repo that already
+exists, so it's safe to leave old rows in place.
 
 The workflow needs a repo secret `PROVISION_PAT`: a fine-grained PAT scoped to
 this org with Administration (write) and Contents (write) at the repository

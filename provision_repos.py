@@ -9,6 +9,11 @@ have one, and adds the student as a collaborator.
 Usage:
     python provision_repos.py --roster roster.csv [--dry-run]
 
+Assignment configuration (template repo, resulting repo prefix, and
+visibility per assignment code) lives in assignment_config.json, not in
+this file -- see load_assignment_config() -- so it can be edited without
+touching code (e.g. by the Moodle admin plugin).
+
 Requires env var PROVISION_PAT: a fine-grained PAT scoped to the
 iZen-AI-Academy org with Administration (write) and Contents (write) at the
 repository level, plus repository-level Secrets (read/write).
@@ -23,6 +28,7 @@ fine via its own workflow's env, then pushes copies of them onto each new
 """
 import argparse
 import csv
+import json
 import os
 import sys
 import time
@@ -34,15 +40,30 @@ from github import Auth, Github, GithubException
 
 ORG = "iZen-AI-Academy"
 
-# assignment_code -> template repo name, resulting repo prefix, and visibility.
-# Repo prefixes intentionally match the pre-existing student repos so that
-# downstream grading/Moodle-sync automation keeps matching by name.
-ASSIGNMENT_CONFIG = {
-    "FM2": {"template": "fm2_python_template", "prefix": "fm3-python-programming", "private": True},
-    "FM3": {"template": "fm3_numpy_template", "prefix": "fm4-numpy", "private": True},
-    "FM4": {"template": "fm4_pandas_template", "prefix": "fm4-pandas", "private": True},
-    "FM7": {"template": "fm7_feature_engineering_template", "prefix": "fm8-feature-engineering", "private": True},
-}
+ASSIGNMENT_CONFIG_PATH = "assignment_config.json"
+REQUIRED_ASSIGNMENT_FIELDS = {"template", "prefix", "private"}
+
+
+def load_assignment_config(path: str = ASSIGNMENT_CONFIG_PATH) -> dict:
+    """Load assignment_code -> {template, prefix, private} from JSON.
+
+    Repo prefixes are expected to match the pre-existing student repos so
+    that downstream grading/Moodle-sync automation keeps matching by name.
+    Kept in a plain JSON file rather than Python so it can be edited
+    without touching code (e.g. by the Moodle admin plugin).
+    """
+    with open(path, encoding="utf-8") as f:
+        config = json.load(f)
+
+    for code, entry in config.items():
+        missing = REQUIRED_ASSIGNMENT_FIELDS - set(entry)
+        if missing:
+            raise ValueError(f"{path}: assignment '{code}' is missing required fields: {', '.join(sorted(missing))}")
+
+    return config
+
+
+ASSIGNMENT_CONFIG = load_assignment_config()
 
 COLLABORATOR_PERMISSION = "push"
 
