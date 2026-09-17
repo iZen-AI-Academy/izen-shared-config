@@ -1,0 +1,6 @@
+{
+  "FM2": {"template": "fm2_python_template", "prefix": "fm3-python-programming", "private": true},
+  "FM3": {"template": "fm3_numpy_template", "prefix": "fm4-numpy", "private": true},
+  "FM4": {"template": "fm4_pandas_template", "prefix": "fm4-pandas", "private": true},
+  "FM7": {"template": "fm7_feature_engineering_template", "prefix": "fm8-feature-engineering", "private": true}
+}
