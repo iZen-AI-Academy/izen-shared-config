@@ -27,12 +27,17 @@ someusername,FM2
 ```
 
 Assignment codes come from `assignment_config.json` — currently `FM2`
-(Python), `FM3` (NumPy), `FM4` (Pandas), `FM7` (Feature Engineering). Each
-entry there is `{"template": ..., "prefix": ..., "private": ...}`; adding a
-new assignment just means adding a new entry to that file, no code changes
-needed. Pushing a change to `roster.csv` on `main` triggers the `Provision
-student repos` workflow automatically; it skips any repo that already
-exists, so it's safe to leave old rows in place.
+(Python), `FM3` (NumPy), `FM4` (Pandas), `FM7` (Feature Engineering) for the
+Foundations course (course_id 21), and `M2B`, `M2C`, `M3A`, `M3B`, `M3C`,
+`M3D`, `M4`, `M5A`, `M5B` for the Machine Learning Engineer course (course_id
+19). `M2A` is intentionally missing: its template repo
+(`mle-m2a-regression-metrics-template`) is empty and not marked as a usable
+template — needs its content sourced before it can be added. Each entry in
+`assignment_config.json` is `{"template": ..., "prefix": ..., "private":
+...}`; adding a new assignment just means adding a new entry to that file, no
+code changes needed. Pushing a change to `roster.csv` on `main` triggers the
+`Provision student repos` workflow automatically; it skips any repo that
+already exists, so it's safe to leave old rows in place.
 
 The workflow needs a repo secret `PROVISION_PAT`: a fine-grained PAT scoped to
 this org with Administration (write) and Contents (write) at the repository
