@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Submitting this creates a repo for **you specifically** — whoever is
+        Submitting this creates a repo for **you specifically**, whoever is
         logged into GitHub right now. Make sure you're logged into your own
         account before submitting.
   - type: dropdown
