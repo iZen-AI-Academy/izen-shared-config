@@ -15,7 +15,7 @@ Files:
 
 GitHub Classroom used to create a student's assignment repo when they accepted
 an invite. `provision_repos.py` replaces that step with a direct call to the
-GitHub REST API's "generate from template" endpoint — no Classroom or
+GitHub REST API's "generate from template" endpoint. No Classroom or
 Classroom 50 dependency, works on the org's Free tier.
 
 To provision repos for new students, add a row per (student, assignment) to
@@ -26,16 +26,13 @@ github_username,assignment_code
 someusername,FM2
 ```
 
-Assignment codes come from `assignment_config.json` — currently `FM2`
+Assignment codes come from `assignment_config.json`, currently `FM2`
 (Python), `FM3` (NumPy), `FM4` (Pandas), `FM7` (Feature Engineering) for the
-Foundations course (course_id 21), and `M2B`, `M2C`, `M3A`, `M3B`, `M3C`,
-`M3D`, `M4`, `M5A`, `M5B` for the Machine Learning Engineer course (course_id
-19). `M2A` is intentionally missing: its template repo
-(`mle-m2a-regression-metrics-template`) is empty and not marked as a usable
-template — needs its content sourced before it can be added. Each entry in
-`assignment_config.json` is `{"template": ..., "prefix": ..., "private":
-...}`; adding a new assignment just means adding a new entry to that file, no
-code changes needed. Pushing a change to `roster.csv` on `main` triggers the
+Foundations course (course_id 21), and `M2A`, `M2B`, `M2C`, `M3A`, `M3B`,
+`M3C`, `M3D`, `M4`, `M5A`, `M5B` for the Machine Learning Engineer course
+(course_id 19). Each entry in `assignment_config.json` is `{"template": ...,
+"prefix": ..., "private": ...}`; adding a new assignment just means adding a
+new entry to that file, no code changes needed. Pushing a change to `roster.csv` on `main` triggers the
 `Provision student repos` workflow automatically; it skips any repo that
 already exists, so it's safe to leave old rows in place.
 
@@ -47,7 +44,7 @@ level, plus repository-level Secrets (read/write).
 
 This org is on GitHub's **Free** plan. On Free, an org-level Actions secret
 scoped to "All repositories" (like `MOODLE_URL` and `MOODLE_TOKEN`) is only
-ever passed to **public** repos — private repos never receive it, no matter
+ever passed to **public** repos. Private repos never receive it, no matter
 how they were created. This isn't new or caused by the Classroom migration:
 it's been silently breaking Moodle sync for every private assignment (NumPy,
 Pandas, Feature Engineering) since at least mid-2026.
@@ -56,11 +53,11 @@ Since `izen-shared-config` is itself public, its own workflow *can* read
 `secrets.MOODLE_URL` / `secrets.MOODLE_TOKEN` fine. `provision_repos.py` uses
 that to push copies of both onto every new **private** repo as repo-level
 secrets (which work regardless of plan), right after creating it. This means
-the workflow also needs `MOODLE_URL` and `MOODLE_TOKEN` in its own `env:` —
+the workflow also needs `MOODLE_URL` and `MOODLE_TOKEN` in its own `env:`,
 already wired up in `provision-repos.yml`, sourced from the same org secrets.
 
 Existing private student repos created before this fix has the same problem
-and need a one-time backfill — see `backfill_repo_secrets.py`.
+and need a one-time backfill, see `backfill_repo_secrets.py`.
 
 FM2 (Python) is private too, for a different reason: it used to be public
 specifically to get the free org-secret access described above, but that
@@ -85,7 +82,7 @@ Give students this link:
 
 They pick their assignment from a dropdown and submit. Because they're
 already logged into GitHub, their username is captured automatically from
-who actually opened the issue — not a text field they type into, so there's
+who actually opened the issue, not a text field they type into, so there's
 no way to request a repo under someone else's name. A workflow
 (`provision-from-issue.yml`) picks up the request, runs the same
 provisioning logic as `provision_repos.py` for that one student, comments
@@ -93,7 +90,7 @@ the result on the issue (the new repo's link, or a clear error), and closes
 it either way.
 
 Only GitHub usernames already present in `github_moodle_map.csv` can
-request a repo this way — since this repo is public, anyone with a GitHub
+request a repo this way, since this repo is public, anyone with a GitHub
 account can technically open the issue, and that roster check is the guard
 against a stranger getting a repo (and a copy of the Moodle secrets) created
 for them.
