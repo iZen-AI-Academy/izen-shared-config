@@ -19,6 +19,7 @@ body:
         - "FM3 - NumPy"
         - "FM4 - Pandas"
         - "FM7 - Feature Engineering"
+        - "M2A - Regression Metrics"
         - "M2B - Regression GDA"
         - "M2C - Regression Car Price"
         - "M3A - Classification Metrics"
