@@ -9,7 +9,14 @@ permissions:
 
 jobs:
   provision:
-    if: contains(github.event.issue.labels.*.name, 'repo-request')
+    # Prefer the label, but also match on the form's own body structure so a
+    # missing/renamed/misapplied label can't silently swallow a request the
+    # way it did before this label existed at all (see incident: issues #5-7
+    # got zero response because the "repo-request" label had never been
+    # created in this repo, so Issue Forms silently skipped applying it).
+    if: >-
+      contains(github.event.issue.labels.*.name, 'repo-request') ||
+      contains(github.event.issue.body, '### Assignment')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
